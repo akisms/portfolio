@@ -26,7 +26,7 @@
   --focus: #FFB088;
 }
 * { margin: 0; padding: 0; box-sizing: border-box; }
-html { scroll-behavior: smooth; font-size: 17px; }
+html { font-size: 17px; }
 body {
   font-family: 'Hanken Grotesk', -apple-system, BlinkMacSystemFont, Helvetica, Arial, sans-serif;
   color: var(--ink); background: var(--paper);
@@ -36,14 +36,14 @@ body {
 .wrap { max-width: 1120px; margin: 0 auto; padding: 0 1.75rem; }
 
 /* ── Nav ── */
-nav {
+#nav {
   position: fixed; top: 0; left: 0; right: 0; z-index: 100; height: 60px;
   display: flex; align-items: center; justify-content: space-between;
   padding: 0 1.75rem; background: rgba(20,20,23,0.82);
   backdrop-filter: blur(14px); -webkit-backdrop-filter: blur(14px);
   border-bottom: 1px solid transparent; transition: border-color .3s, box-shadow .3s;
 }
-nav.scrolled { border-bottom-color: var(--line); box-shadow: 0 2px 16px rgba(28,27,26,0.04); }
+#nav.scrolled { border-bottom-color: var(--line); box-shadow: 0 2px 16px rgba(28,27,26,0.04); }
 .nav-name { font-weight: 700; font-size: .95rem; letter-spacing: -.01em; text-decoration: none; color: var(--ink); }
 .nav-name b { color: var(--accent); font-weight: 700; }
 .nav-links { display: flex; gap: 1.35rem; list-style: none; align-items: center; }
@@ -62,14 +62,17 @@ nav.scrolled { border-bottom-color: var(--line); box-shadow: 0 2px 16px rgba(28,
 
 /* ── Journey strip ── */
 .journey { display: grid; grid-template-columns: repeat(4,1fr); gap: .75rem; padding: 1.75rem 0 1rem; }
-.journey .step { border: 1px solid var(--line); background: var(--card); border-radius: 14px; padding: .9rem 1rem; }
-.journey .step .n { font-size: .72rem; font-weight: 700; color: var(--accent); letter-spacing: .04em; }
-.journey .step .t { font-size: .92rem; font-weight: 700; margin-top: .15rem; }
-.journey .step .d { font-size: .76rem; color: var(--muted); margin-top: .2rem; }
+.journey .step { display: block; border: 1px solid var(--line); background: var(--card); border-radius: 14px; padding: .9rem 1rem; text-decoration: none; color: inherit; transition: border-color .18s, transform .18s, background .18s; }
+.journey .step:hover, .journey .step:focus-visible { border-color: var(--accent); transform: translateY(-2px); background: var(--paper-2); }
+.journey .step .n { display: block; font-size: .72rem; font-weight: 700; color: var(--accent); letter-spacing: .04em; }
+.journey .step .t { display: flex; align-items: center; gap: .35rem; font-size: .92rem; font-weight: 700; margin-top: .15rem; }
+.journey .step .t::after { content: "→"; color: var(--accent); opacity: 0; transform: translateX(-3px); transition: opacity .18s, transform .18s; font-weight: 600; }
+.journey .step:hover .t::after, .journey .step:focus-visible .t::after { opacity: 1; transform: none; }
+.journey .step .d { display: block; font-size: .76rem; color: var(--muted); margin-top: .2rem; }
 @media (max-width: 760px) { .journey { grid-template-columns: 1fr 1fr; } }
 
 /* ── Section ── */
-section.block { padding: 3rem 0; }
+section.block { padding: 3rem 0; scroll-margin-top: 80px; }
 section.block.alt { background: var(--paper-2); }
 .section-head { margin-bottom: 1.7rem; }
 .section-stage { display: inline-flex; align-items: center; gap: .6rem; font-size: .92rem; font-weight: 600; color: var(--accent); }
@@ -200,12 +203,12 @@ a:focus-visible, button:focus-visible, .card:focus-visible {
 </header>
 
 <div class="wrap">
-  <div class="journey">
-    <div class="step"><div class="n">01</div><div class="t">Awareness</div><div class="d">Thought leadership &amp; content</div></div>
-    <div class="step"><div class="n">02</div><div class="t">Consideration</div><div class="d">Positioning &amp; web</div></div>
-    <div class="step"><div class="n">03</div><div class="t">Enablement</div><div class="d">Sales &amp; field</div></div>
-    <div class="step"><div class="n">04</div><div class="t">Adoption</div><div class="d">Automation inspiration</div></div>
-  </div>
+  <nav class="journey" aria-label="Jump to a stage of the customer journey">
+    <a class="step" href="#awareness"><span class="n">01</span><span class="t">Awareness</span><span class="d">Thought leadership &amp; content</span></a>
+    <a class="step" href="#consideration"><span class="n">02</span><span class="t">Consideration</span><span class="d">Positioning &amp; web</span></a>
+    <a class="step" href="#enablement"><span class="n">03</span><span class="t">Enablement</span><span class="d">Sales &amp; field</span></a>
+    <a class="step" href="#adoption"><span class="n">04</span><span class="t">Adoption</span><span class="d">Automation inspiration</span></a>
+  </nav>
 </div>
 
 <main id="sections"></main>
@@ -504,11 +507,25 @@ addEventListener('keydown', e => {
 const nav = document.getElementById('nav');
 addEventListener('scroll', () => nav.classList.toggle('scrolled', scrollY > 12));
 
-// sections render after load, so re-apply any deep link to a section
-if (location.hash && location.hash !== '#top') {
-  const target = document.querySelector(location.hash);
-  if (target) target.scrollIntoView();
+// In-page anchor scrolling. Sections render via JS, so native fragment
+// navigation can fire before they exist; handle it explicitly instead.
+const reduceMotion = matchMedia('(prefers-reduced-motion: reduce)').matches;
+function scrollToHash(hash) {
+  const behavior = reduceMotion ? 'auto' : 'smooth';
+  if (hash === '#top' || hash === '#') { window.scrollTo({ top: 0, behavior }); return; }
+  const el = document.querySelector(hash);
+  if (el) el.scrollIntoView({ behavior, block: 'start' });
 }
+document.addEventListener('click', e => {
+  const a = e.target.closest('a[href^="#"]');
+  if (!a) return;
+  const hash = a.getAttribute('href');
+  if (hash.length < 2) return;
+  e.preventDefault();
+  scrollToHash(hash);
+  history.replaceState(null, '', hash);
+});
+addEventListener('load', () => { if (location.hash.length > 1) scrollToHash(location.hash); });
 </script>
 </body>
 </html>
