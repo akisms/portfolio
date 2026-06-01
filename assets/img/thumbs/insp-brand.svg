@@ -1,0 +1,28 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="1000" height="625" viewBox="0 0 1000 625" role="img" aria-label="Brand mention and sentiment tracker">
+  <rect width="1000" height="625" fill="#FBEEE4"/>
+  <g transform="translate(0,0)">
+    <!-- three app tiles -->
+    <g transform="translate(285,205)">
+      <rect width="130" height="130" rx="22" fill="#ffffff" stroke="#EBD9CB"/>
+      <!-- chat bubbles -->
+      <circle cx="50" cy="55" r="11" fill="#E0542E"/>
+      <circle cx="80" cy="55" r="11" fill="#F2A03D"/>
+      <circle cx="50" cy="85" r="11" fill="#F2A03D"/>
+      <circle cx="80" cy="85" r="11" fill="#E0542E"/>
+    </g>
+    <g transform="translate(435,205)">
+      <rect width="130" height="130" rx="22" fill="#ffffff" stroke="#EBD9CB"/>
+      <!-- RSS -->
+      <circle cx="45" cy="90" r="8" fill="#E0542E"/>
+      <path d="M37 65 a25 25 0 0 1 25 25" fill="none" stroke="#E0542E" stroke-width="9" stroke-linecap="round"/>
+      <path d="M37 47 a43 43 0 0 1 43 43" fill="none" stroke="#E0542E" stroke-width="9" stroke-linecap="round"/>
+    </g>
+    <g transform="translate(585,205)">
+      <rect width="130" height="130" rx="22" fill="#ffffff" stroke="#EBD9CB"/>
+      <!-- AI spark -->
+      <path d="M65 40 L74 58 L92 65 L74 72 L65 90 L56 72 L38 65 L56 58 Z" fill="#1C1B1A"/>
+    </g>
+  </g>
+  <text x="500" y="430" text-anchor="middle" font-family="Inter, Arial, sans-serif" font-size="34" font-weight="700" fill="#1C1B1A">Brand Mention &amp; Sentiment Tracker</text>
+  <text x="500" y="470" text-anchor="middle" font-family="Inter, Arial, sans-serif" font-size="22" fill="#8A7E74">Slack · RSS · AI by Zapier</text>
+</svg>
