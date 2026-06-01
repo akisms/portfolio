@@ -1,0 +1,428 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Ayman Kotob — Work Portfolio for BrightHire</title>
+<meta name="description" content="A curated portfolio of product marketing work by Ayman Kotob: ZapConnect enablement decks, RevOps assets, published blogs, and web pages.">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&family=Instrument+Serif:ital@0;1&display=swap" rel="stylesheet">
+<style>
+:root {
+  --purple-deepest: #1A0F4E;
+  --purple-deep: #2D1B69;
+  --purple: #4F3DBE;
+  --purple-mid: #6B5BD9;
+  --purple-bright: #8B7AF0;
+  --purple-light: #B5A8F5;
+  --purple-pale: #E8E3FB;
+  --purple-tint: #F4F1FC;
+  --cta: #6E5DE7;
+  --cta-hover: #5847D4;
+  --white: #FFFFFF;
+  --black: #1A1530;
+  --gray-700: #3D3658;
+  --gray-600: #5F5876;
+  --gray-500: #7A7396;
+  --gray-400: #9C95B5;
+  --gray-300: #C5BFD5;
+  --gray-200: #E2DEEB;
+  --gray-100: #EFECF5;
+  --gray-50: #F8F6FB;
+  --accent: #FFD166;
+  --coral: #E86A5E;
+  --green: #2EBD8E;
+}
+* { margin: 0; padding: 0; box-sizing: border-box; }
+html { scroll-behavior: smooth; font-size: 17px; }
+body {
+  font-family: 'Inter', -apple-system, BlinkMacSystemFont, Helvetica, Arial, sans-serif;
+  color: var(--black);
+  background: var(--white);
+  -webkit-font-smoothing: antialiased;
+  line-height: 1.55;
+}
+a { color: inherit; }
+.serif { font-family: 'Instrument Serif', Georgia, serif; font-weight: 400; }
+
+/* ── Nav ── */
+nav {
+  position: fixed; top: 0; left: 0; right: 0; z-index: 100;
+  height: 60px; padding: 0 1.75rem;
+  display: flex; align-items: center; justify-content: space-between;
+  background: rgba(255,255,255,0.9);
+  backdrop-filter: blur(14px); -webkit-backdrop-filter: blur(14px);
+  border-bottom: 1px solid transparent;
+  transition: border-color 0.3s, box-shadow 0.3s;
+}
+nav.scrolled { border-bottom-color: rgba(26,21,48,0.07); box-shadow: 0 2px 14px rgba(79,61,190,0.06); }
+.nav-name { font-weight: 700; font-size: 0.95rem; letter-spacing: -0.01em; text-decoration: none; }
+.nav-name span { color: var(--purple); }
+.nav-links { display: flex; gap: 1.4rem; list-style: none; align-items: center; }
+.nav-links a {
+  color: var(--gray-600); text-decoration: none; font-size: 0.82rem; font-weight: 500;
+  transition: color 0.2s;
+}
+.nav-links a:hover { color: var(--purple); }
+@media (max-width: 820px) { .nav-links { display: none; } }
+
+/* ── Hero ── */
+.hero {
+  padding: 9rem 1.75rem 3.5rem;
+  max-width: 1080px; margin: 0 auto;
+  display: grid; grid-template-columns: auto 1fr; gap: 2.25rem; align-items: center;
+}
+.hero img.avatar {
+  width: 132px; height: 132px; border-radius: 50%;
+  object-fit: cover; box-shadow: 0 10px 36px rgba(79,61,190,0.22);
+  border: 4px solid var(--white);
+}
+.hero .eyebrow {
+  font-size: 0.78rem; font-weight: 600; letter-spacing: 0.08em; text-transform: uppercase;
+  color: var(--purple); margin-bottom: 0.6rem;
+}
+.hero h1 { font-size: 2.7rem; line-height: 1.08; letter-spacing: -0.025em; margin-bottom: 0.85rem; }
+.hero h1 em { font-style: italic; color: var(--purple); }
+.hero p { font-size: 1.05rem; color: var(--gray-700); max-width: 640px; }
+@media (max-width: 720px) {
+  .hero { grid-template-columns: 1fr; gap: 1.4rem; padding-top: 7rem; }
+  .hero img.avatar { width: 96px; height: 96px; }
+  .hero h1 { font-size: 2.1rem; }
+}
+
+/* ── Section ── */
+section.block { max-width: 1080px; margin: 0 auto; padding: 2.75rem 1.75rem; }
+.section-head { display: flex; align-items: baseline; gap: 0.85rem; margin-bottom: 1.6rem; }
+.section-head h2 { font-size: 1.55rem; letter-spacing: -0.02em; }
+.section-head .count {
+  font-size: 0.78rem; font-weight: 600; color: var(--purple);
+  background: var(--purple-tint); padding: 0.18rem 0.6rem; border-radius: 100px;
+}
+.section-head .desc { font-size: 0.9rem; color: var(--gray-500); margin-left: auto; max-width: 360px; text-align: right; }
+@media (max-width: 720px) { .section-head { flex-wrap: wrap; } .section-head .desc { text-align: left; margin-left: 0; } }
+
+/* ── Cards grid ── */
+.grid { display: grid; gap: 1.25rem; }
+.grid.cols-3 { grid-template-columns: repeat(3, 1fr); }
+.grid.cols-2 { grid-template-columns: repeat(2, 1fr); }
+@media (max-width: 900px) { .grid.cols-3 { grid-template-columns: repeat(2, 1fr); } }
+@media (max-width: 640px) { .grid.cols-3, .grid.cols-2 { grid-template-columns: 1fr; } }
+
+.card {
+  display: flex; flex-direction: column;
+  background: var(--white); border: 1px solid var(--gray-200); border-radius: 16px;
+  overflow: hidden; transition: transform 0.18s, box-shadow 0.18s, border-color 0.18s;
+}
+.card:hover { transform: translateY(-3px); box-shadow: 0 14px 34px rgba(79,61,190,0.13); border-color: var(--purple-light); }
+.card-media {
+  position: relative; background: var(--gray-50);
+  aspect-ratio: 16 / 10; overflow: hidden; border-bottom: 1px solid var(--gray-100);
+}
+.card-media img { width: 100%; height: 100%; object-fit: cover; object-position: top center; }
+.card-media iframe { width: 100%; height: 100%; border: 0; display: block; }
+.card-media.contain { background: var(--gray-100); }
+.card-media.contain img { object-fit: contain; }
+.card-body { padding: 1.05rem 1.15rem 1.2rem; display: flex; flex-direction: column; flex: 1; }
+.card-kicker {
+  font-size: 0.7rem; font-weight: 600; letter-spacing: 0.06em; text-transform: uppercase;
+  color: var(--purple); margin-bottom: 0.4rem;
+}
+.card-title { font-size: 1.02rem; font-weight: 700; letter-spacing: -0.01em; line-height: 1.25; margin-bottom: 0.4rem; }
+.card-desc { font-size: 0.86rem; color: var(--gray-600); flex: 1; }
+.card-actions { display: flex; gap: 0.55rem; margin-top: 0.95rem; flex-wrap: wrap; }
+.btn {
+  display: inline-flex; align-items: center; gap: 0.35rem;
+  padding: 0.45rem 0.9rem; border-radius: 100px; font-size: 0.78rem; font-weight: 600;
+  text-decoration: none; cursor: pointer; border: 1px solid transparent; transition: all 0.15s;
+  font-family: inherit;
+}
+.btn.primary { background: var(--cta); color: var(--white); }
+.btn.primary:hover { background: var(--cta-hover); }
+.btn.ghost { background: var(--white); color: var(--purple); border-color: var(--gray-200); }
+.btn.ghost:hover { border-color: var(--purple-light); background: var(--purple-tint); }
+.btn svg { width: 13px; height: 13px; }
+
+/* ── Modal ── */
+.modal {
+  position: fixed; inset: 0; z-index: 200; display: none;
+  align-items: center; justify-content: center; padding: 2rem;
+  background: rgba(26,15,78,0.55); backdrop-filter: blur(4px);
+}
+.modal.open { display: flex; }
+.modal-inner {
+  background: var(--white); border-radius: 16px; width: 100%; max-width: 1000px; height: 90vh;
+  display: flex; flex-direction: column; overflow: hidden; box-shadow: 0 30px 80px rgba(0,0,0,0.4);
+}
+.modal-bar {
+  display: flex; align-items: center; justify-content: space-between;
+  padding: 0.75rem 1.1rem; border-bottom: 1px solid var(--gray-200);
+}
+.modal-bar .t { font-weight: 700; font-size: 0.95rem; }
+.modal-bar .x { background: var(--gray-100); border: none; width: 32px; height: 32px; border-radius: 50%; cursor: pointer; font-size: 1.1rem; color: var(--gray-700); }
+.modal-bar .x:hover { background: var(--gray-200); }
+.modal iframe { flex: 1; width: 100%; border: 0; }
+
+/* ── Footer ── */
+footer { border-top: 1px solid var(--gray-200); margin-top: 2rem; }
+.foot-inner { max-width: 1080px; margin: 0 auto; padding: 2.25rem 1.75rem; display: flex; justify-content: space-between; align-items: center; flex-wrap: wrap; gap: 1rem; }
+.foot-inner p { font-size: 0.85rem; color: var(--gray-500); }
+.foot-inner a { color: var(--purple); font-weight: 600; font-size: 0.85rem; text-decoration: none; }
+</style>
+</head>
+<body>
+
+<nav id="nav">
+  <a href="#top" class="nav-name">Ayman Kotob<span> · Portfolio</span></a>
+  <ul class="nav-links">
+    <li><a href="#decks">Decks</a></li>
+    <li><a href="#assets">Assets</a></li>
+    <li><a href="#blogs">Blogs</a></li>
+    <li><a href="#pages">Web Pages</a></li>
+    <li><a href="#inspiration">Inspiration</a></li>
+  </ul>
+</nav>
+
+<header class="hero" id="top">
+  <img class="avatar" src="assets/img/headshot.jpeg" alt="Ayman Kotob">
+  <div>
+    <div class="eyebrow">Work Portfolio · for the BrightHire team</div>
+    <h1>A selection of <em>product marketing</em> work I'm proud of.</h1>
+    <p>Hi BrightHire team — here's a curated set of assets I created at Zapier: enablement decks presented at ZapConnect, RevOps sales and research assets, published blogs, and core web pages. Each item links straight to the live work.</p>
+  </div>
+</header>
+
+<!-- ── Decks ── -->
+<section class="block" id="decks">
+  <div class="section-head">
+    <h2>ZapConnect Enablement Decks</h2>
+    <span class="count">3</span>
+    <span class="desc">Decks I prepared for Product Managers to present at ZapConnect (ZC25).</span>
+  </div>
+  <div class="grid cols-3">
+    <article class="card">
+      <div class="card-media">
+        <iframe src="https://docs.google.com/presentation/d/1AOvKkH7_txjnugS93jj0a2dgDZ0-PNXG/embed?start=false&loop=false&delayms=5000" allowfullscreen loading="lazy" title="In the Spotlight: New Features in the Zapier Editor"></iframe>
+      </div>
+      <div class="card-body">
+        <div class="card-kicker">Slide deck</div>
+        <h3 class="card-title">In the Spotlight: New Features in the Zapier Editor</h3>
+        <p class="card-desc">A product spotlight walking PMs through the latest capabilities in the Zapier Editor.</p>
+        <div class="card-actions">
+          <a class="btn primary" href="https://docs.google.com/presentation/d/1AOvKkH7_txjnugS93jj0a2dgDZ0-PNXG/edit?usp=sharing&ouid=110767310684061765000&rtpof=true&sd=true" target="_blank" rel="noopener">Open in Google Slides ↗</a>
+        </div>
+      </div>
+    </article>
+    <article class="card">
+      <div class="card-media">
+        <iframe src="https://docs.google.com/presentation/d/1x1k-my-bMNgeVSFBvIVDFayDDIvvm9cZ3fZaL4VTchQ/embed?start=false&loop=false&delayms=5000" allowfullscreen loading="lazy" title="Build Powerful Systems with Zapier Copilot"></iframe>
+      </div>
+      <div class="card-body">
+        <div class="card-kicker">Slide deck</div>
+        <h3 class="card-title">Build Powerful Systems with Zapier Copilot</h3>
+        <p class="card-desc">How to construct integrated systems across Zapier products using Zapier Copilot.</p>
+        <div class="card-actions">
+          <a class="btn primary" href="https://docs.google.com/presentation/d/1x1k-my-bMNgeVSFBvIVDFayDDIvvm9cZ3fZaL4VTchQ/edit?usp=sharing" target="_blank" rel="noopener">Open in Google Slides ↗</a>
+        </div>
+      </div>
+    </article>
+    <article class="card">
+      <div class="card-media">
+        <iframe src="https://docs.google.com/presentation/d/1V9oMIwQDxvF7pjKw9wJzhyeitrPbDmIru6VnOhUz5NE/embed?start=false&loop=false&delayms=5000" allowfullscreen loading="lazy" title="Building Connected Systems: Master Orchestration with Zaps, Tables, and Interfaces"></iframe>
+      </div>
+      <div class="card-body">
+        <div class="card-kicker">Slide deck</div>
+        <h3 class="card-title">Building Connected Systems: Zaps, Tables &amp; Interfaces</h3>
+        <p class="card-desc">Master orchestration — how Zaps, Tables, and Interfaces come together end-to-end.</p>
+        <div class="card-actions">
+          <a class="btn primary" href="https://docs.google.com/presentation/d/1V9oMIwQDxvF7pjKw9wJzhyeitrPbDmIru6VnOhUz5NE/edit?usp=sharing" target="_blank" rel="noopener">Open in Google Slides ↗</a>
+        </div>
+      </div>
+    </article>
+  </div>
+</section>
+
+<!-- ── Strategic Assets ── -->
+<section class="block" id="assets">
+  <div class="section-head">
+    <h2>RevOps Sales &amp; Research Assets</h2>
+    <span class="count">2</span>
+    <span class="desc">Assets I created for sales / solution engineers and in collaboration with RevOps Co-op.</span>
+  </div>
+  <div class="grid cols-2">
+    <article class="card">
+      <div class="card-media contain">
+        <img src="assets/img/zapmap-thumb.png" alt="RevOps Automation Zap Map preview">
+      </div>
+      <div class="card-body">
+        <div class="card-kicker">Sales / SE asset</div>
+        <h3 class="card-title">RevOps Automation Zap Map</h3>
+        <p class="card-desc">A visual map of high-value RevOps automations across the funnel — built to equip sales and solution engineers in customer conversations.</p>
+        <div class="card-actions">
+          <button class="btn primary" onclick="openPdf('assets/pdfs/revops-zap-map.pdf','RevOps Automation Zap Map')">View asset</button>
+          <a class="btn ghost" href="assets/pdfs/revops-zap-map.pdf" download>Download PDF</a>
+        </div>
+      </div>
+    </article>
+    <article class="card">
+      <div class="card-media">
+        <img src="assets/img/report-thumb.png" alt="State of RevOps Automation Report cover">
+      </div>
+      <div class="card-body">
+        <div class="card-kicker">Research report</div>
+        <h3 class="card-title">The State of RevOps Automation Report</h3>
+        <p class="card-desc">A research report built with RevOps Co-op, drawing on 450+ RevOps professionals — covering the automation gap, AI adoption, and revenue-driving opportunities.</p>
+        <div class="card-actions">
+          <button class="btn primary" onclick="openPdf('assets/pdfs/state-of-revops-automation-report.pdf','The State of RevOps Automation Report')">View report</button>
+          <a class="btn ghost" href="assets/pdfs/state-of-revops-automation-report.pdf" download>Download PDF</a>
+        </div>
+      </div>
+    </article>
+  </div>
+</section>
+
+<!-- ── Blogs ── -->
+<section class="block" id="blogs">
+  <div class="section-head">
+    <h2>Blogs I Wrote</h2>
+    <span class="count">4</span>
+    <span class="desc">Published on the Zapier blog.</span>
+  </div>
+  <div class="grid cols-2">
+    <article class="card">
+      <div class="card-body">
+        <div class="card-kicker">Zapier Blog</div>
+        <h3 class="card-title">Zaps, Tables, and Interfaces coming together</h3>
+        <p class="card-desc">How Zapier's building blocks combine into connected systems — including MCP.</p>
+        <div class="card-actions"><a class="btn primary" href="https://zapier.com/blog/zaps-tables-interfaces-mcp/" target="_blank" rel="noopener">Read article ↗</a></div>
+      </div>
+    </article>
+    <article class="card">
+      <div class="card-body">
+        <div class="card-kicker">Zapier Blog</div>
+        <h3 class="card-title">AI workflow features round-up</h3>
+        <p class="card-desc">A round-up of the AI-powered workflow features shipping across Zapier.</p>
+        <div class="card-actions"><a class="btn primary" href="https://zapier.com/blog/ai-workflow-features/" target="_blank" rel="noopener">Read article ↗</a></div>
+      </div>
+    </article>
+    <article class="card">
+      <div class="card-body">
+        <div class="card-kicker">Zapier Blog</div>
+        <h3 class="card-title">Calling a function from a Zap</h3>
+        <p class="card-desc">A deep dive on using function steps to extend what a Zap can do.</p>
+        <div class="card-actions"><a class="btn primary" href="https://zapier.com/blog/functions-steps-in-zaps/" target="_blank" rel="noopener">Read article ↗</a></div>
+      </div>
+    </article>
+    <article class="card">
+      <div class="card-body">
+        <div class="card-kicker">Zapier Blog</div>
+        <h3 class="card-title">Human in the loop: Slack approvals for AI automation</h3>
+        <p class="card-desc">Adding Slack-based approval steps so humans stay in control of AI automations.</p>
+        <div class="card-actions"><a class="btn primary" href="https://zapier.com/blog/slack-approval-for-ai-automation/" target="_blank" rel="noopener">Read article ↗</a></div>
+      </div>
+    </article>
+  </div>
+</section>
+
+<!-- ── Web Pages ── -->
+<section class="block" id="pages">
+  <div class="section-head">
+    <h2>Web Pages</h2>
+    <span class="count">3</span>
+    <span class="desc">Core marketing pages I contributed to on zapier.com.</span>
+  </div>
+  <div class="grid cols-3">
+    <article class="card">
+      <div class="card-body">
+        <div class="card-kicker">Solutions page</div>
+        <h3 class="card-title">Zapier for RevOps</h3>
+        <p class="card-desc">The solutions landing page positioning Zapier for revenue operations teams.</p>
+        <div class="card-actions"><a class="btn primary" href="https://zapier.com/solutions/revops-automation" target="_blank" rel="noopener">Visit page ↗</a></div>
+      </div>
+    </article>
+    <article class="card">
+      <div class="card-body">
+        <div class="card-kicker">Enterprise page</div>
+        <h3 class="card-title">Security &amp; Compliance</h3>
+        <p class="card-desc">The enterprise security &amp; compliance page (archived snapshot of the recent update).</p>
+        <div class="card-actions"><a class="btn primary" href="https://web.archive.org/web/20260101093259/https://zapier.com/security-compliance" target="_blank" rel="noopener">View snapshot ↗</a></div>
+      </div>
+    </article>
+    <article class="card">
+      <div class="card-body">
+        <div class="card-kicker">Pricing page</div>
+        <h3 class="card-title">Zapier Pricing</h3>
+        <p class="card-desc">The Zapier pricing page.</p>
+        <div class="card-actions"><a class="btn primary" href="https://zapier.com/pricing" target="_blank" rel="noopener">Visit page ↗</a></div>
+      </div>
+    </article>
+  </div>
+</section>
+
+<!-- ── Automation Inspiration ── -->
+<section class="block" id="inspiration">
+  <div class="section-head">
+    <h2>Automation Inspiration</h2>
+    <span class="count">2</span>
+    <span class="desc">Examples of automations and use cases worth a look.</span>
+  </div>
+  <div class="grid cols-2">
+    <article class="card">
+      <div class="card-body">
+        <div class="card-kicker">Use case</div>
+        <h3 class="card-title">Eliminating sales handoffs with automation</h3>
+        <p class="card-desc">How automation removes the friction and dropped balls in sales handoffs.</p>
+        <div class="card-actions"><a class="btn primary" href="https://zapier.com/blog/eliminate-handoff-headaches-with-automation/" target="_blank" rel="noopener">Read article ↗</a></div>
+      </div>
+    </article>
+    <article class="card">
+      <div class="card-body">
+        <div class="card-kicker">Template</div>
+        <h3 class="card-title">Brand sentiment / news mentions tracker</h3>
+        <p class="card-desc">A ready-to-use template that automates brand monitoring and news-mention tracking.</p>
+        <div class="card-actions"><a class="btn primary" href="https://zapier.com/templates/details/automate-brand-monitoring-news-mentions-tracker" target="_blank" rel="noopener">View template ↗</a></div>
+      </div>
+    </article>
+  </div>
+</section>
+
+<footer>
+  <div class="foot-inner">
+    <p>Prepared by Ayman Kotob for the BrightHire team.</p>
+    <a href="#top">Back to top ↑</a>
+  </div>
+</footer>
+
+<!-- PDF modal -->
+<div class="modal" id="pdfModal" onclick="if(event.target===this)closePdf()">
+  <div class="modal-inner">
+    <div class="modal-bar">
+      <span class="t" id="pdfTitle">Document</span>
+      <button class="x" onclick="closePdf()" aria-label="Close">&times;</button>
+    </div>
+    <iframe id="pdfFrame" src="" title="PDF viewer"></iframe>
+  </div>
+</div>
+
+<script>
+const nav = document.getElementById('nav');
+addEventListener('scroll', () => nav.classList.toggle('scrolled', scrollY > 12));
+
+const modal = document.getElementById('pdfModal');
+const frame = document.getElementById('pdfFrame');
+const title = document.getElementById('pdfTitle');
+function openPdf(src, name) {
+  frame.src = src;
+  title.textContent = name;
+  modal.classList.add('open');
+  document.body.style.overflow = 'hidden';
+}
+function closePdf() {
+  modal.classList.remove('open');
+  frame.src = '';
+  document.body.style.overflow = '';
+}
+addEventListener('keydown', e => { if (e.key === 'Escape') closePdf(); });
+</script>
+</body>
+</html>
