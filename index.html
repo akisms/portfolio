@@ -140,6 +140,10 @@ section.block.alt { background: var(--paper-2); }
 .modal-info .fact .k { font-weight: 700; color: var(--muted); font-size: .76rem; letter-spacing: .04em; text-transform: uppercase; padding-top: .1rem; }
 .modal-info .fact .v { color: var(--ink-soft); }
 #mResult { color: var(--accent); font-weight: 600; }
+.mlinks { margin-bottom: 1.2rem; }
+.mlinks-label { font-size: .74rem; font-weight: 700; letter-spacing: .04em; text-transform: uppercase; color: var(--muted); margin-bottom: .5rem; }
+.mlinks a { display: block; color: var(--accent); font-size: .9rem; font-weight: 500; text-decoration: none; padding: .2rem 0; }
+.mlinks a:hover { text-decoration: underline; }
 @media (max-width: 560px) { .modal-info .fact { grid-template-columns: 1fr; gap: .15rem; } }
 .btn { display: inline-flex; align-items: center; gap: .4rem; padding: .6rem 1.15rem; border-radius: 100px; font-size: .85rem; font-weight: 600; text-decoration: none; cursor: pointer; border: 1px solid transparent; font-family: inherit; transition: background .15s, border-color .15s; }
 .btn.primary { background: var(--accent); color: var(--on-accent); }
@@ -238,6 +242,7 @@ a:focus-visible, button:focus-visible, .card:focus-visible {
           <div class="fact"><div class="k">Goal</div><div class="v" id="mGoal"></div></div>
           <div class="fact"><div class="k">Collaborated with</div><div class="v" id="mCollab"></div></div>
         </div>
+        <div class="mlinks" id="mLinks"></div>
         <div id="mActions"></div>
       </div>
     </div>
@@ -271,6 +276,16 @@ const SECTIONS = [
         card: { type: "image", src: "assets/img/thumbs/blog-aifeatures.jpg" },
         modal: { type: "image", src: "assets/img/thumbs/blog-aifeatures.jpg" },
         href: "https://zapier.com/blog/ai-workflow-features/", cta: "Read article ↗"
+      },
+      {
+        kicker: "Zapier Blog", title: "Automate NetSuite",
+        desc: "The content anchor for our NetSuite integration launch — showing finance and RevOps teams how to automate NetSuite workflows.",
+        result: "Part of a NetSuite GTM launch that drove ~$52K in pipeline, 6 qualified meetings, and a webinar with 286 registrations / 78 attendees.",
+        goal: "Drive demand for a new integration and pull finance and RevOps buyers into the funnel.",
+        collab: "Lead-authored by Zapier's content team (I collaborated on the piece); I coordinated and led the NetSuite GTM launch and webinar.",
+        card: { type: "image", src: "assets/img/thumbs/blog-netsuite.jpg" },
+        modal: { type: "image", src: "assets/img/thumbs/blog-netsuite.jpg" },
+        href: "https://zapier.com/blog/automate-netsuite/", cta: "Read article ↗"
       }
     ]
   },
@@ -318,6 +333,22 @@ const SECTIONS = [
         card: { type: "image", src: "assets/img/thumbs/page-pricing.jpg" },
         modal: { type: "image", src: "assets/img/thumbs/page-pricing.jpg" },
         href: "https://zapier.com/pricing", cta: "Visit page ↗"
+      },
+      {
+        kicker: "Solutions pages", title: "Use-Case Solutions Pages",
+        desc: "A set of seven use-case solutions pages I drove — translating customer jobs-to-be-done (lead management, sales pipeline, marketing campaigns, and more) into conversion-focused web pages.",
+        result: "Drove +192% YoY traffic and +127% YoY signups across the set.",
+        goal: "Capture use-case demand and convert it with job-specific positioning.",
+        collab: "Web/Growth, PMM peers, and Design.",
+        linksLabel: "Example pages",
+        links: [
+          { label: "Lead management", href: "https://zapier.com/solutions/lead-management" },
+          { label: "Sales pipeline management", href: "https://zapier.com/solutions/sales-pipeline-management" },
+          { label: "Marketing campaigns", href: "https://zapier.com/solutions/marketing-campaigns" }
+        ],
+        card: { type: "image", src: "assets/img/thumbs/page-usecase.jpg" },
+        modal: { type: "image", src: "assets/img/thumbs/page-usecase.jpg" },
+        href: "https://zapier.com/solutions/lead-management", cta: "Visit a page ↗"
       }
     ]
   },
@@ -470,6 +501,12 @@ function openModal(c, stage, trigger) {
   const resultRow = document.getElementById('mResultRow');
   if (c.result) { document.getElementById('mResult').textContent = c.result; resultRow.style.display = ''; }
   else { resultRow.style.display = 'none'; }
+  const mLinks = document.getElementById('mLinks');
+  if (c.links && c.links.length) {
+    mLinks.innerHTML = `<div class="mlinks-label">${esc(c.linksLabel || 'Pages')}</div>` +
+      c.links.map(l => `<a href="${l.href}" target="_blank" rel="noopener">${esc(l.label)} ↗</a>`).join('');
+    mLinks.style.display = '';
+  } else { mLinks.innerHTML = ''; mLinks.style.display = 'none'; }
   if (c.modal.type === "image") {
     mMedia.className = "modal-media image";
     mMedia.innerHTML = `<img src="${c.modal.src}" alt="${esc(c.title)}">`;
