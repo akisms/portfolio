@@ -56,7 +56,7 @@ body {
 .hero img.avatar { width: 124px; height: 124px; border-radius: 50%; object-fit: cover; border: 4px solid var(--card); box-shadow: 0 12px 34px rgba(28,27,26,0.12); }
 .hero .eyebrow { font-size: .76rem; font-weight: 600; letter-spacing: .09em; text-transform: uppercase; color: var(--accent); margin-bottom: .55rem; }
 .hero h1 { font-family: 'Bricolage Grotesque', sans-serif; font-size: clamp(2rem, 6vw, 3.35rem); line-height: 1.05; letter-spacing: -.03em; font-weight: 800; margin-bottom: .8rem; text-wrap: balance; }
-.hero h1 em { font-weight: 500; font-style: italic; color: var(--accent); letter-spacing: -.01em; }
+.hero h1 em { font-style: normal; color: var(--accent); }
 .hero p { font-size: 1.04rem; color: var(--ink-soft); max-width: 62ch; text-wrap: pretty; }
 @media (max-width: 720px) { .hero { grid-template-columns: 1fr; gap: 1.3rem; padding-top: 7rem; } .hero img.avatar { width: 92px; height: 92px; } }
 
@@ -116,7 +116,7 @@ section.block.alt { background: var(--paper-2); }
 .card:hover .open-hint, .card:focus-visible .open-hint { opacity: 1; }
 .open-hint span { background: var(--accent); color: var(--on-accent); font-size: .78rem; font-weight: 700; padding: .5rem .95rem; border-radius: 100px; box-shadow: 0 6px 18px rgba(0,0,0,.28); }
 .card-body { padding: 1rem 1.1rem 1.15rem; display: flex; flex-direction: column; flex: 1; }
-.card-kicker { font-size: .68rem; font-weight: 700; letter-spacing: .06em; text-transform: uppercase; color: var(--accent); margin-bottom: .35rem; }
+.card-kicker { font-size: .68rem; font-weight: 700; letter-spacing: .06em; text-transform: uppercase; color: var(--muted); margin-bottom: .35rem; }
 .card-title { font-size: 1.02rem; font-weight: 700; letter-spacing: -.01em; line-height: 1.25; margin-bottom: .35rem; }
 .card-desc { font-size: .855rem; color: var(--ink-soft); flex: 1; }
 .card-result { margin-top: .7rem; font-size: .8rem; font-weight: 600; color: var(--accent); display: flex; gap: .4rem; align-items: baseline; line-height: 1.35; }
@@ -171,7 +171,9 @@ section.block.alt { background: var(--paper-2); }
 footer { border-top: 1px solid var(--line); }
 .foot { display: flex; justify-content: space-between; align-items: center; flex-wrap: wrap; gap: 1rem; padding: 2.25rem 0; }
 .foot p { font-size: .85rem; color: var(--muted); }
+.foot-links { display: flex; gap: 1.4rem; align-items: center; flex-wrap: wrap; }
 .foot a { color: var(--accent-ink); font-weight: 600; font-size: .85rem; text-decoration: none; }
+.foot a:hover { text-decoration: underline; }
 
 /* ── Focus & skip link ── */
 a:focus-visible, button:focus-visible, .card:focus-visible {
@@ -221,7 +223,7 @@ a:focus-visible, button:focus-visible, .card:focus-visible {
   <div>
     <div class="eyebrow">Product Marketing Portfolio</div>
     <h1>Work that moves customers <em>across the journey.</em></h1>
-    <p>A selection of product marketing I've led at Zapier — thought leadership, positioning, sales enablement, and adoption — organized by where each asset sits in the customer journey. Click any card to dive in.</p>
+    <p>A selection of product marketing I've led at Zapier, organized by where each asset sits in the customer journey: thought leadership, positioning, sales enablement, and adoption. Click any card to dive in.</p>
   </div>
 </header>
 
@@ -277,15 +279,19 @@ a:focus-visible, button:focus-visible, .card:focus-visible {
       <h2>A bit about me</h2>
     </div>
     <div class="about">
-      <p>I'm an AI-forward B2B product marketer with ~9 years of experience (5 in product marketing), translating complex products into clear narratives that help GTM teams win. Most recently I spent three years at Zapier marketing to technical and operations audiences — RevOps and enterprise buyers — where a deeply horizontal product made the job about bringing focus: who we're really talking to, what story resonates, and how to tell it consistently across channels. Being at an automation company during the AI wave shaped how I think about AI, as both a market narrative and a daily tool. Before Zapier, I worked on Coursera's enterprise business and QuickBooks at Intuit — a throughline of industries that look unglamorous on the surface but have a great product disrupting them.</p>
+      <p>I'm an AI-forward B2B product marketer with ~9 years of experience (5 in product marketing), translating complex products into clear narratives that help GTM teams win. Most recently I spent three years at Zapier marketing to technical and operations audiences (RevOps and enterprise buyers), where a deeply horizontal product made the job about bringing focus: who we're really talking to, what story resonates, and how to tell it consistently across channels. Being at an automation company during the AI wave shaped how I think about AI, as both a market narrative and a daily tool. Before Zapier, I worked on Coursera's enterprise business and QuickBooks at Intuit, a throughline of industries that look unglamorous on the surface but have a great product disrupting them.</p>
       <p class="about-aside">When I'm not pontificating about the intersection of automation and AI, you'll find me on the soccer field or the pickleball court.</p>
     </div>
   </div>
 </section>
 
 <footer><div class="wrap foot">
-  <p>Product marketing portfolio · Ayman Kotob</p>
-  <a href="#top">Back to top ↑</a>
+  <p>Ayman Kotob · Product marketing portfolio</p>
+  <div class="foot-links">
+    <a href="mailto:aymankotob@gmail.com">Email</a>
+    <a href="https://www.linkedin.com/in/aymankotob" target="_blank" rel="noopener">LinkedIn ↗</a>
+    <a href="#top">Back to top ↑</a>
+  </div>
 </div></footer>
 
 <!-- Focus modal -->
@@ -324,7 +330,7 @@ const SECTIONS = [
       {
         feature: true,
         kicker: "Research report", title: "The Future of Revenue Operations",
-        desc: "A report with RevOps Co-op where 10 senior RevOps leaders forecast the next chapter of the function — from org design to automation and AI.",
+        desc: "A report with RevOps Co-op where 10 senior RevOps leaders forecast the next chapter of the function, from org design to automation and AI.",
         goal: "Present credible, data-backed RevOps hot takes that earn attention from RevOps buyers and drive interest in Zapier.",
         collab: "RevOps Co-op (co-author) and Zapier's content + design teams.",
         card: { type: "image", src: "assets/img/report-thumb.png" },
@@ -342,7 +348,7 @@ const SECTIONS = [
       },
       {
         kicker: "Zapier Blog", title: "Automate NetSuite",
-        desc: "The content anchor for our NetSuite integration launch — showing finance and RevOps teams how to automate NetSuite workflows.",
+        desc: "The content anchor for our NetSuite integration launch, showing finance and RevOps teams how to automate NetSuite workflows.",
         result: "Part of a NetSuite GTM launch that drove ~$52K in pipeline, 6 qualified meetings, and a webinar with 286 registrations / 78 attendees.",
         goal: "Drive demand for a new integration and pull finance and RevOps buyers into the funnel.",
         collab: "Lead-authored by Zapier's content team (I collaborated on the piece); I coordinated and led the NetSuite GTM launch and webinar.",
@@ -354,7 +360,7 @@ const SECTIONS = [
   },
   {
     id: "consideration", stage: "02 · Consideration", title: "Positioning & Web",
-    blurb: "Surfaces buyers hit while evaluating — where product value gets translated into clear positioning, proof points, and messaging that converts.",
+    blurb: "Surfaces buyers hit while evaluating, where product value gets translated into clear positioning, proof points, and messaging that converts.",
     meta: "<b>Goal:</b> help buyers evaluate and build the business case. &nbsp;<b>Collaborated with:</b> Web/Growth team, PMM peers, Design, and Security team.",
     cards: [
       {
@@ -421,13 +427,13 @@ const SECTIONS = [
   },
   {
     id: "enablement", stage: "03 · Enablement", title: "Sales & GTM Enablement",
-    blurb: "The assets that arm sales engineers and the field to tell a sharp story — both in one-to-one customer conversations and on stage at ZapConnect.",
+    blurb: "The assets that arm sales engineers and the field to tell a sharp story, both in one-to-one customer conversations and on stage at ZapConnect.",
     meta: "<b>Goal:</b> equip the field to run great conversations, demos, and sessions. &nbsp;<b>Collaborated with:</b> Sales and Solutions Engineers, Product Managers + the Events team (ZapConnect decks).",
     cards: [
       {
         feature: true,
         kicker: "Sales / SE asset", title: "RevOps Automation Zap Map",
-        desc: "A visual map of high-value RevOps automations across the funnel — built to equip sales and solution engineers in customer conversations.",
+        desc: "A visual map of high-value RevOps automations across the funnel, built to equip sales and solution engineers in customer conversations.",
         result: "Positive feedback from solutions engineers; helped move discovery conversations forward.",
         goal: "Give SEs a single visual to anchor discovery and show what's possible, fast.",
         collab: "RevOps, Sales and Solutions Engineers, and Design.",
@@ -440,7 +446,7 @@ const SECTIONS = [
         desc: "A product spotlight I prepared for PMs to present at ZapConnect (ZC25), walking the audience through the latest Editor capabilities.",
         goal: "Equip PMs to land new-feature messaging consistently on the main stage.",
         collab: "Product managers (presenters) and the Events team.",
-        card: { type: "embed", src: embed("1AOvKkH7_txjnugS93jj0a2dgDZ0-PNXG") },
+        card: { type: "image", src: "assets/img/thumbs/deck-editor.jpg" },
         modal: { type: "embed", src: embed("1AOvKkH7_txjnugS93jj0a2dgDZ0-PNXG") },
         href: "https://docs.google.com/presentation/d/1AOvKkH7_txjnugS93jj0a2dgDZ0-PNXG/edit?usp=sharing&ouid=110767310684061765000&rtpof=true&sd=true", cta: "Open in Google Slides ↗", badge: "Slides"
       },
@@ -449,7 +455,7 @@ const SECTIONS = [
         desc: "A deck guiding customers through building integrated systems across Zapier products using Zapier Copilot.",
         goal: "Show the cross-product 'systems' story with Copilot as the connective tissue.",
         collab: "Product managers (presenters) and the Events team.",
-        card: { type: "embed", src: embed("1x1k-my-bMNgeVSFBvIVDFayDDIvvm9cZ3fZaL4VTchQ") },
+        card: { type: "image", src: "assets/img/thumbs/deck-copilot.jpg" },
         modal: { type: "embed", src: embed("1x1k-my-bMNgeVSFBvIVDFayDDIvvm9cZ3fZaL4VTchQ") },
         href: "https://docs.google.com/presentation/d/1x1k-my-bMNgeVSFBvIVDFayDDIvvm9cZ3fZaL4VTchQ/edit?usp=sharing", cta: "Open in Google Slides ↗", badge: "Slides"
       },
@@ -459,7 +465,7 @@ const SECTIONS = [
         result: "One of the highest-rated sessions at ZapConnect.",
         goal: "Teach the audience to think in systems, not single automations.",
         collab: "Product managers (presenters) and the Events team.",
-        card: { type: "embed", src: embed("1V9oMIwQDxvF7pjKw9wJzhyeitrPbDmIru6VnOhUz5NE") },
+        card: { type: "image", src: "assets/img/thumbs/deck-connected.jpg" },
         modal: { type: "embed", src: embed("1V9oMIwQDxvF7pjKw9wJzhyeitrPbDmIru6VnOhUz5NE") },
         href: "https://docs.google.com/presentation/d/1V9oMIwQDxvF7pjKw9wJzhyeitrPbDmIru6VnOhUz5NE/edit?usp=sharing", cta: "Open in Google Slides ↗", badge: "Slides"
       }
@@ -467,7 +473,7 @@ const SECTIONS = [
   },
   {
     id: "adoption", stage: "04 · Adoption", title: "Automation Inspiration",
-    blurb: "Concrete, copyable patterns, use cases, and how-tos that turn customers into active power users — the post-sale fuel for activation and expansion.",
+    blurb: "Concrete, copyable patterns, use cases, and how-tos that turn customers into active power users: the post-sale fuel for activation and expansion.",
     meta: "<b>Goal:</b> drive activation and deeper usage with ready-to-use examples and how-tos. &nbsp;<b>Collaborated with:</b> Growth, Customer Education, and product + content teams (on the how-to guides).",
     cards: [
       {
