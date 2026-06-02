@@ -71,6 +71,21 @@ body {
 .journey .step .d { display: block; font-size: .76rem; color: var(--muted); margin-top: .2rem; }
 @media (max-width: 760px) { .journey { grid-template-columns: 1fr 1fr; } }
 
+/* ── About ── */
+.about { margin-bottom: .5rem; }
+.about p { max-width: 70ch; color: var(--ink-soft); font-size: 1rem; line-height: 1.65; }
+.about .about-aside { margin-top: .9rem; color: var(--muted); font-size: .92rem; }
+
+/* ── Recommendations ── */
+.recs-grid { display: grid; gap: 1.2rem; grid-template-columns: repeat(auto-fit, minmax(280px, 1fr)); }
+.rec { margin: 0; background: var(--card); border: 1px solid var(--line); border-radius: 16px; padding: 1.5rem; display: flex; flex-direction: column; }
+.rec p { margin: 0; color: var(--ink-soft); font-size: .92rem; line-height: 1.6; flex: 1; }
+.rec footer { margin-top: 1.15rem; display: flex; flex-direction: column; gap: .15rem; }
+.rec-name { font-weight: 700; font-size: .92rem; color: var(--ink); }
+.rec-role { color: var(--muted); font-size: .8rem; }
+.recs-link { display: inline-block; margin-top: 1.5rem; color: var(--accent); font-weight: 600; font-size: .9rem; text-decoration: none; }
+.recs-link:hover { text-decoration: underline; }
+
 /* ── Section ── */
 section.block { padding: 3rem 0; scroll-margin-top: 80px; }
 section.block.alt { background: var(--paper-2); }
@@ -209,6 +224,11 @@ a:focus-visible, button:focus-visible, .card:focus-visible {
   </div>
 </header>
 
+<section class="wrap about" id="about">
+  <p>I'm an AI-forward B2B product marketer with ~9 years of experience (5 in product marketing), translating complex products into clear narratives that help GTM teams win. Most recently I spent three years at Zapier marketing to technical and operations audiences — RevOps and enterprise buyers — where a deeply horizontal product made the job about bringing focus: who we're really talking to, what story resonates, and how to tell it consistently across channels. Being at an automation company during the AI wave shaped how I think about AI, as both a market narrative and a daily tool. Before Zapier, I worked on Coursera's enterprise business and QuickBooks at Intuit — a throughline of industries that look unglamorous on the surface but have a great product disrupting them.</p>
+  <p class="about-aside">When I'm not pontificating about the intersection of automation and AI, you'll find me on the soccer field or the pickleball court.</p>
+</section>
+
 <div class="wrap">
   <nav class="journey" aria-label="Jump to a stage of the customer journey">
     <a class="step" href="#awareness"><span class="n">01</span><span class="t">Awareness</span><span class="d">Thought leadership &amp; content</span></a>
@@ -219,6 +239,31 @@ a:focus-visible, button:focus-visible, .card:focus-visible {
 </div>
 
 <main id="sections"></main>
+
+<section class="block" id="recommendations">
+  <div class="wrap">
+    <div class="section-head">
+      <div class="section-stage">Recommendations</div>
+      <h2>What colleagues say</h2>
+      <p class="blurb">A few words from people I worked closely with at Zapier — my manager, a senior GTM leader, and a cross-functional launch partner.</p>
+    </div>
+    <div class="recs-grid">
+      <blockquote class="rec">
+        <p>"Ayman led security and compliance content for our 2025 enterprise launch, translating complex governance features into messaging that resonated with IT decision-makers. He combines analytical rigor with strategic thinking — and was genuinely hungry to get better."</p>
+        <footer><span class="rec-name">Joe Stych</span><span class="rec-role">Product Marketing Manager, Zapier · Ayman's manager</span></footer>
+      </blockquote>
+      <blockquote class="rec">
+        <p>"Ayman helped the team move from broad positioning to clear, actionable narratives for priority verticals. An asset for any team looking for a strategic product marketer who can lead verticalization efforts, build GTM foundations, and collaborate effectively across functions."</p>
+        <footer><span class="rec-name">Michael Shen</span><span class="rec-role">Head of Growth, OuterSignal · ex-Zapier, senior to Ayman</span></footer>
+      </blockquote>
+      <blockquote class="rec">
+        <p>"He crafted all communications — for hundreds of thousands of customers — with an uncanny ability to distill complex launches into action steps and drive alignment. The launch was a success, and we couldn't have done it without Ayman."</p>
+        <footer><span class="rec-name">Jake Murphy</span><span class="rec-role">Business Operations & Strategy, Zapier</span></footer>
+      </blockquote>
+    </div>
+    <a class="recs-link" href="https://www.linkedin.com/in/aymankotob" target="_blank" rel="noopener">See all recommendations on LinkedIn ↗</a>
+  </div>
+</section>
 
 <footer><div class="wrap foot">
   <p>Product marketing portfolio · Ayman Kotob</p>
