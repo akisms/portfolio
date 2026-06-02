@@ -103,6 +103,8 @@ section.block.alt { background: var(--paper-2); }
 .card-kicker { font-size: .68rem; font-weight: 700; letter-spacing: .06em; text-transform: uppercase; color: var(--accent); margin-bottom: .35rem; }
 .card-title { font-size: 1.02rem; font-weight: 700; letter-spacing: -.01em; line-height: 1.25; margin-bottom: .35rem; }
 .card-desc { font-size: .855rem; color: var(--ink-soft); flex: 1; }
+.card-result { margin-top: .7rem; font-size: .8rem; font-weight: 600; color: var(--accent); display: flex; gap: .4rem; align-items: baseline; line-height: 1.35; }
+.card-result::before { content: "↑"; font-weight: 700; flex: none; }
 
 /* ── Featured lead card ── */
 .feature-wrap { margin-bottom: 1.2rem; }
@@ -137,6 +139,7 @@ section.block.alt { background: var(--paper-2); }
 .modal-info .fact { display: grid; grid-template-columns: 130px 1fr; gap: .8rem; font-size: .9rem; }
 .modal-info .fact .k { font-weight: 700; color: var(--muted); font-size: .76rem; letter-spacing: .04em; text-transform: uppercase; padding-top: .1rem; }
 .modal-info .fact .v { color: var(--ink-soft); }
+#mResult { color: var(--accent); font-weight: 600; }
 @media (max-width: 560px) { .modal-info .fact { grid-template-columns: 1fr; gap: .15rem; } }
 .btn { display: inline-flex; align-items: center; gap: .4rem; padding: .6rem 1.15rem; border-radius: 100px; font-size: .85rem; font-weight: 600; text-decoration: none; cursor: pointer; border: 1px solid transparent; font-family: inherit; transition: background .15s, border-color .15s; }
 .btn.primary { background: var(--accent); color: var(--on-accent); }
@@ -231,6 +234,7 @@ a:focus-visible, button:focus-visible, .card:focus-visible {
         <h3 id="mTitle"></h3>
         <p class="mdesc" id="mDesc"></p>
         <div class="facts">
+          <div class="fact" id="mResultRow"><div class="k">Result</div><div class="v" id="mResult"></div></div>
           <div class="fact"><div class="k">Goal</div><div class="v" id="mGoal"></div></div>
           <div class="fact"><div class="k">Collaborated with</div><div class="v" id="mCollab"></div></div>
         </div>
@@ -279,6 +283,7 @@ const SECTIONS = [
         feature: true,
         kicker: "Solutions page", title: "Zapier for RevOps",
         desc: "The solutions landing page positioning Zapier specifically for revenue operations teams and their tech-stack pain.",
+        result: "Grew from not ranking to #2 in organic search; set the page format later reused across Sales, Marketing, and Support.",
         goal: "Convert RevOps interest into evaluation with role-specific positioning and use cases.",
         collab: "Web/Growth team, Design, and PMM peers.",
         card: { type: "image", src: "assets/img/thumbs/page-revops.jpg" },
@@ -297,6 +302,7 @@ const SECTIONS = [
       {
         kicker: "Trust page", title: "Security & Compliance",
         desc: "The enterprise security & compliance page (archived snapshot before recent page update) — the proof layer that unblocks larger deals.",
+        result: "Anchored an enterprise campaign: +19% high-quality ICP leads (538→640), +17% qualified opportunities, and $140k+ in pipeline.",
         goal: "Give security reviewers and IT the assurances they need to approve Zapier.",
         collab: "Security, Legal, Web team, and Design.",
         card: { type: "image", src: "assets/img/thumbs/page-security.jpg" },
@@ -350,6 +356,7 @@ const SECTIONS = [
       {
         kicker: "ZapConnect deck", title: "Building Connected Systems: Zaps, Tables & Interfaces",
         desc: "A deck on fundamentals of orchestration, and how Zaps, Tables, and Interfaces come together end-to-end.",
+        result: "One of the highest-rated sessions at ZapConnect.",
         goal: "Teach the audience to think in systems, not single automations.",
         collab: "Product managers (presenters) and the Events team.",
         card: { type: "embed", src: embed("1V9oMIwQDxvF7pjKw9wJzhyeitrPbDmIru6VnOhUz5NE") },
@@ -422,6 +429,7 @@ function renderCard(c, i, j, feature) {
         <div class="card-kicker">${esc(c.kicker)}</div>
         <h3 class="card-title">${esc(c.title)}</h3>
         <p class="card-desc">${esc(c.desc)}</p>
+        ${c.result ? `<p class="card-result">${esc(c.result)}</p>` : ''}
       </div>
     </article>`;
 }
@@ -457,6 +465,9 @@ function openModal(c, stage, trigger) {
   document.getElementById('mDesc').textContent = c.desc;
   document.getElementById('mGoal').textContent = c.goal;
   document.getElementById('mCollab').textContent = c.collab;
+  const resultRow = document.getElementById('mResultRow');
+  if (c.result) { document.getElementById('mResult').textContent = c.result; resultRow.style.display = ''; }
+  else { resultRow.style.display = 'none'; }
   if (c.modal.type === "image") {
     mMedia.className = "modal-media image";
     mMedia.innerHTML = `<img src="${c.modal.src}" alt="${esc(c.title)}">`;
