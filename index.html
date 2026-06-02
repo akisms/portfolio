@@ -101,6 +101,9 @@ section.block.alt { background: var(--paper-2); }
 
 /* ── Grid + cards ── */
 .grid { display: grid; gap: 1.2rem; grid-template-columns: repeat(auto-fill, minmax(280px, 1fr)); }
+.featured-grid { grid-template-columns: repeat(auto-fit, minmax(360px, 1fr)); gap: 1.4rem; }
+.card.stacked { box-shadow: 5px 5px 0 0 var(--card), 5px 5px 0 1px var(--line), 10px 10px 0 0 var(--card), 10px 10px 0 1px var(--line); }
+.card.stacked:hover, .card.stacked:focus-visible { box-shadow: 5px 5px 0 0 var(--card), 5px 5px 0 1px var(--line), 10px 10px 0 0 var(--card), 10px 10px 0 1px var(--line), 0 16px 36px rgba(0,0,0,0.28); }
 .card {
   display: flex; flex-direction: column; background: var(--card);
   border: 1px solid var(--line); border-radius: 16px; overflow: hidden; cursor: pointer;
@@ -228,6 +231,17 @@ a:focus-visible, button:focus-visible, .card:focus-visible {
   </div>
 </header>
 
+<section class="block" id="featured">
+  <div class="wrap">
+    <div class="section-head">
+      <div class="section-stage">Featured work</div>
+      <h2>Selected highlights</h2>
+      <p class="blurb">A few pieces I'm most proud of, pulled from across the customer journey below.</p>
+    </div>
+    <div class="grid featured-grid" id="featured-grid"></div>
+  </div>
+</section>
+
 <div class="wrap">
   <nav class="journey" aria-label="Jump to a stage of the customer journey">
     <a class="step" href="#awareness"><span class="n">01</span><span class="t">Awareness</span><span class="d">Thought leadership &amp; content</span></a>
@@ -339,7 +353,6 @@ const SECTIONS = [
     meta: "<b>Goal:</b> Educate the market and generate demand. &nbsp;<b>Collaborated with:</b> Zapier's Content &amp; Brand team, product managers (on product-news pieces), and RevOps thought leaders.",
     cards: [
       {
-        feature: true,
         kicker: "Research report", title: "The Future of Revenue Operations",
         desc: "A report with RevOps Co-op where 10 senior RevOps leaders forecast the next chapter of the function, from org design to automation and AI.",
         goal: "Present credible, data-backed RevOps hot takes that earn attention from RevOps buyers and drive interest in Zapier.",
@@ -375,7 +388,7 @@ const SECTIONS = [
     meta: "<b>Goal:</b> help buyers evaluate and build the business case. &nbsp;<b>Collaborated with:</b> Web/Growth team, PMM peers, Design, and Security team.",
     cards: [
       {
-        feature: true,
+        key: "revops",
         kicker: "Solutions page", title: "Zapier for RevOps",
         desc: "The solutions landing page positioning Zapier specifically for revenue operations teams and their tech-stack pain.",
         result: "Grew from not ranking to #2 in organic search; set the page format later reused across Sales, Marketing, and Support.",
@@ -415,6 +428,7 @@ const SECTIONS = [
         href: "https://zapier.com/pricing", cta: "Visit page ↗"
       },
       {
+        key: "usecases",
         kicker: "Solutions pages", title: "Use-Case Solutions Pages",
         desc: "A set of seven use-case solutions pages I drove — translating customer jobs-to-be-done (lead management, sales pipeline, marketing campaigns, and more) into conversion-focused web pages.",
         result: "Drove +192% YoY traffic and +127% YoY signups across the set.",
@@ -442,7 +456,7 @@ const SECTIONS = [
     meta: "<b>Goal:</b> equip the field to run great conversations, demos, and sessions. &nbsp;<b>Collaborated with:</b> Sales and Solutions Engineers, Product Managers + the Events team (ZapConnect decks).",
     cards: [
       {
-        feature: true,
+        key: "zapmap",
         kicker: "Sales / SE asset", title: "RevOps Automation Zap Map",
         desc: "A visual map of high-value RevOps automations across the funnel, built to equip sales and solution engineers in customer conversations.",
         result: "Positive feedback from solutions engineers; helped move discovery conversations forward.",
@@ -534,9 +548,20 @@ function cardMedia(c) {
   return `<img src="${c.card.src}" alt="${esc(c.title)} preview" loading="lazy">`;
 }
 const stageName = s => s.split('·').pop().trim();
-function renderCard(c, i, j, feature) {
+
+// Registry so a card can be rendered in more than one place (Featured + its
+// section) and still open the same modal. Keyed by a stable id.
+const cardModalData = {};
+let _autoKey = 0;
+function keyFor(c) {
+  if (!c._key) c._key = c.key || ('k' + (++_autoKey));
+  cardModalData[c._key] = c;
+  return c._key;
+}
+function renderCard(c) {
+  const k = keyFor(c);
   return `
-    <article class="card${feature ? ' feature' : ''}" tabindex="0" role="button" data-s="${i}" data-c="${j}" aria-label="Open ${esc(c.title)}">
+    <article class="card${c.stacked ? ' stacked' : ''}" tabindex="0" role="button" data-key="${k}" aria-label="Open ${esc(c.title)}">
       <div class="card-media${c.card.contain ? ' contain' : ''}">
         ${c.badge ? `<span class="badge">${c.badge}</span>` : ''}
         ${cardMedia(c)}
@@ -550,12 +575,36 @@ function renderCard(c, i, j, feature) {
       </div>
     </article>`;
 }
+
+// Tag each card with its stage and index referenced cards for the Featured set.
+const cardByKey = {};
+SECTIONS.forEach(s => s.cards.forEach(c => { c._stage = s.stage; if (c.key) cardByKey[c.key] = c; }));
+
+// Composite "one item, three decks" card for Featured.
+const zapconnectFeatured = {
+  key: "zapconnect-decks", _stage: "03 · Enablement",
+  kicker: "ZapConnect decks", title: "ZapConnect Enablement Decks",
+  desc: "Three decks I prepared for PMs to present at ZapConnect (ZC25): new Editor features, building systems with Copilot, and orchestrating Zaps, Tables, and Interfaces.",
+  result: "One of the sessions was among the highest-rated at ZapConnect.",
+  goal: "Equip PMs to land consistent, high-quality messaging on the main stage.",
+  collab: "Product managers (presenters) and the Events team.",
+  card: { type: "image", src: "assets/img/thumbs/deck-connected.jpg" },
+  modal: { type: "image", src: "assets/img/thumbs/deck-editor.jpg" },
+  badge: "3 decks", stacked: true,
+  linksLabel: "Decks", links: [
+    { label: "In the Spotlight: New Features in the Zapier Editor", href: "https://docs.google.com/presentation/d/1AOvKkH7_txjnugS93jj0a2dgDZ0-PNXG/edit?usp=sharing&ouid=110767310684061765000&rtpof=true&sd=true" },
+    { label: "Build Powerful Systems with Zapier Copilot", href: "https://docs.google.com/presentation/d/1x1k-my-bMNgeVSFBvIVDFayDDIvvm9cZ3fZaL4VTchQ/edit?usp=sharing" },
+    { label: "Building Connected Systems: Zaps, Tables & Interfaces", href: "https://docs.google.com/presentation/d/1V9oMIwQDxvF7pjKw9wJzhyeitrPbDmIru6VnOhUz5NE/edit?usp=sharing" }
+  ],
+  href: "https://docs.google.com/presentation/d/1V9oMIwQDxvF7pjKw9wJzhyeitrPbDmIru6VnOhUz5NE/edit?usp=sharing",
+  cta: "Open in Google Slides ↗"
+};
+
+const FEATURED = [ cardByKey["revops"], cardByKey["usecases"], zapconnectFeatured, cardByKey["zapmap"] ];
+document.getElementById('featured-grid').innerHTML = FEATURED.map(renderCard).join('');
+
 const main = document.getElementById('sections');
 SECTIONS.forEach((s, i) => {
-  const hasFeat = !!s.cards[0].feature;
-  const featHTML = hasFeat ? `<div class="feature-wrap">${renderCard(s.cards[0], i, 0, true)}</div>` : '';
-  const rest = hasFeat ? s.cards.slice(1) : s.cards;
-  const restHTML = rest.map((c, k) => renderCard(c, i, hasFeat ? k + 1 : k, false)).join('');
   main.insertAdjacentHTML('beforeend', `
     <section class="block${i % 2 ? ' alt' : ''}" id="${s.id}">
       <div class="wrap">
@@ -565,8 +614,7 @@ SECTIONS.forEach((s, i) => {
           <p class="blurb">${s.blurb}</p>
           <p class="meta">${s.meta}</p>
         </div>
-        ${featHTML}
-        <div class="grid">${restHTML}</div>
+        <div class="grid">${s.cards.map(renderCard).join('')}</div>
       </div>
     </section>`);
 });
@@ -613,14 +661,15 @@ function closeModal() {
   if (lastFocused) { lastFocused.focus(); lastFocused = null; }
 }
 function openFromCard(card) {
-  openModal(SECTIONS[card.dataset.s].cards[card.dataset.c], SECTIONS[card.dataset.s].stage, card);
+  const c = cardModalData[card.dataset.key];
+  if (c) openModal(c, c._stage || '', card);
 }
-main.addEventListener('click', e => {
+document.addEventListener('click', e => {
   const card = e.target.closest('.card');
-  if (card) openFromCard(card);
+  if (card && card.dataset.key) openFromCard(card);
 });
-main.addEventListener('keydown', e => {
-  if ((e.key === 'Enter' || e.key === ' ') && e.target.classList.contains('card')) {
+document.addEventListener('keydown', e => {
+  if ((e.key === 'Enter' || e.key === ' ') && e.target.classList && e.target.classList.contains('card')) {
     e.preventDefault();
     openFromCard(e.target);
   }
