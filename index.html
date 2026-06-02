@@ -72,8 +72,9 @@ body {
 @media (max-width: 760px) { .journey { grid-template-columns: 1fr 1fr; } }
 
 /* ── About ── */
-.about p { font-family: 'Hanken Grotesk', sans-serif; max-width: 72ch; color: var(--ink-soft); font-size: 1.02rem; line-height: 1.65; }
-.about .about-aside { margin-top: .9rem; color: var(--muted); font-size: .92rem; }
+.about { display: grid; gap: 1.75rem; max-width: 760px; }
+.about-item h3 { font-family: 'Bricolage Grotesque', sans-serif; font-size: 1.25rem; font-weight: 700; letter-spacing: -.02em; color: var(--accent); margin-bottom: .55rem; }
+.about-item p { font-family: 'Hanken Grotesk', sans-serif; color: var(--ink-soft); font-size: 1rem; line-height: 1.6; max-width: 68ch; }
 
 /* ── Recommendations (stacked) ── */
 .recs-list { max-width: 880px; }
@@ -279,8 +280,18 @@ a:focus-visible, button:focus-visible, .card:focus-visible {
       <h2>A bit about me</h2>
     </div>
     <div class="about">
-      <p>I'm an AI-forward B2B product marketer with ~9 years of experience (5 in product marketing), translating complex products into clear narratives that help GTM teams win. Most recently I spent three years at Zapier marketing to technical and operations audiences (RevOps and enterprise buyers), where a deeply horizontal product made the job about bringing focus: who we're really talking to, what story resonates, and how to tell it consistently across channels. Being at an automation company during the AI wave shaped how I think about AI, as both a market narrative and a daily tool. Before Zapier, I worked on Coursera's enterprise business and QuickBooks at Intuit, a throughline of industries that look unglamorous on the surface but have a great product disrupting them.</p>
-      <p class="about-aside">When I'm not pontificating about the intersection of automation and AI, you'll find me on the soccer field or the pickleball court.</p>
+      <div class="about-item">
+        <h3>AI-forward by default</h3>
+        <p>An AI-forward B2B product marketer with ~9 years of experience (5 in product marketing), I translate complex products into clear narratives that help GTM teams win. Three years at Zapier marketing automation and AI to RevOps and enterprise buyers turned AI into both a market narrative I tell and a daily tool I build with.</p>
+      </div>
+      <div class="about-item">
+        <h3>B2B at different scales</h3>
+        <p>Before Zapier, QuickBooks at Intuit and Coursera's enterprise business gave me exposure to B2B marketing at very different scales and across different parts of the funnel, from paid acquisition and sales marketing to enterprise GTM.</p>
+      </div>
+      <div class="about-item">
+        <h3>Off the clock</h3>
+        <p>When I'm not pontificating about the intersection of automation and AI, you'll find me on the soccer field or the pickleball court.</p>
+      </div>
     </div>
   </div>
 </section>
