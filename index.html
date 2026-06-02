@@ -101,9 +101,25 @@ section.block.alt { background: var(--paper-2); }
 
 /* ── Grid + cards ── */
 .grid { display: grid; gap: 1.2rem; grid-template-columns: repeat(auto-fill, minmax(280px, 1fr)); }
-.featured-grid { grid-template-columns: repeat(auto-fit, minmax(360px, 1fr)); gap: 1.4rem; }
-.card.stacked { box-shadow: 5px 5px 0 0 var(--card), 5px 5px 0 1px var(--line), 10px 10px 0 0 var(--card), 10px 10px 0 1px var(--line); }
-.card.stacked:hover, .card.stacked:focus-visible { box-shadow: 5px 5px 0 0 var(--card), 5px 5px 0 1px var(--line), 10px 10px 0 0 var(--card), 10px 10px 0 1px var(--line), 0 16px 36px rgba(0,0,0,0.28); }
+/* Featured: compact horizontal mini-cards (thumbnail left, metric-forward) */
+.featured-grid { grid-template-columns: 1fr 1fr; gap: 1rem; }
+@media (max-width: 680px) { .featured-grid { grid-template-columns: 1fr; } }
+.fcard {
+  display: grid; grid-template-columns: 130px 1fr; min-height: 116px;
+  background: var(--card); border: 1px solid var(--line); border-radius: 14px;
+  overflow: hidden; cursor: pointer; transition: transform .18s, box-shadow .18s, border-color .18s;
+}
+.fcard:hover, .fcard:focus-visible { transform: translateY(-2px); box-shadow: 0 12px 28px rgba(0,0,0,0.22); border-color: var(--accent); outline: none; }
+.fcard-media { position: relative; background: var(--paper-2); border-right: 1px solid var(--line-soft); overflow: hidden; }
+.fcard-media img, .fcard-media iframe { width: 100%; height: 100%; object-fit: cover; object-position: top center; display: block; border: 0; pointer-events: none; }
+.fcard-media.contain img { object-fit: contain; }
+.fcard-media .badge { position: absolute; top: .45rem; left: .45rem; font-size: .6rem; font-weight: 700; letter-spacing: .04em; text-transform: uppercase; background: rgba(28,27,26,0.82); color: #fff; padding: .2rem .5rem; border-radius: 100px; }
+.fcard-body { padding: .9rem 1.1rem; display: flex; flex-direction: column; justify-content: center; gap: .25rem; }
+.fcard-title { font-family: 'Hanken Grotesk', sans-serif; font-size: 1.02rem; font-weight: 700; letter-spacing: -.01em; line-height: 1.2; }
+.fcard .card-result { margin-top: .2rem; }
+@media (max-width: 520px) { .fcard { grid-template-columns: 92px 1fr; } }
+.fcard.stacked { box-shadow: 4px 4px 0 0 var(--card), 4px 4px 0 1px var(--line), 8px 8px 0 0 var(--card), 8px 8px 0 1px var(--line); }
+.fcard.stacked:hover, .fcard.stacked:focus-visible { box-shadow: 4px 4px 0 0 var(--card), 4px 4px 0 1px var(--line), 8px 8px 0 0 var(--card), 8px 8px 0 1px var(--line), 0 12px 28px rgba(0,0,0,0.24); }
 .card {
   display: flex; flex-direction: column; background: var(--card);
   border: 1px solid var(--line); border-radius: 16px; overflow: hidden; cursor: pointer;
@@ -164,6 +180,12 @@ section.block.alt { background: var(--paper-2); }
 .mlinks-label { font-size: .74rem; font-weight: 700; letter-spacing: .04em; text-transform: uppercase; color: var(--muted); margin-bottom: .5rem; }
 .mlinks a { display: block; color: var(--accent); font-size: .9rem; font-weight: 500; text-decoration: none; padding: .2rem 0; }
 .mlinks a:hover { text-decoration: underline; }
+.modal-media.deck-switch { flex-direction: column; align-items: stretch; }
+.deck-tabs { display: flex; gap: .4rem; padding: .6rem .8rem; background: var(--paper-2); border-bottom: 1px solid var(--line); flex-wrap: wrap; }
+.deck-tab { font-family: inherit; font-size: .8rem; font-weight: 600; color: var(--ink-soft); background: transparent; border: 1px solid var(--line); border-radius: 100px; padding: .35rem .85rem; cursor: pointer; transition: all .15s; }
+.deck-tab:hover { border-color: var(--accent); color: var(--ink); }
+.deck-tab.on { background: var(--accent); color: var(--on-accent); border-color: var(--accent); }
+.modal-media.deck-switch iframe { width: 100%; height: 56vh; border: 0; display: block; }
 @media (max-width: 560px) { .modal-info .fact { grid-template-columns: 1fr; gap: .15rem; } }
 .btn { display: inline-flex; align-items: center; gap: .4rem; padding: .6rem 1.15rem; border-radius: 100px; font-size: .85rem; font-weight: 600; text-decoration: none; cursor: pointer; border: 1px solid transparent; font-family: inherit; transition: background .15s, border-color .15s; }
 .btn.primary { background: var(--accent); color: var(--on-accent); }
@@ -576,6 +598,26 @@ function renderCard(c) {
     </article>`;
 }
 
+// Compact horizontal mini-card for the Featured section.
+function renderFeaturedCard(c) {
+  const k = keyFor(c);
+  const media = c.card.type === "embed"
+    ? `<iframe src="${c.card.src}" loading="lazy" tabindex="-1" aria-hidden="true" title="${esc(c.title)} preview"></iframe>`
+    : `<img src="${c.card.src}" alt="${esc(c.title)} preview" loading="lazy">`;
+  return `
+    <article class="fcard${c.stacked ? ' stacked' : ''}" tabindex="0" role="button" data-key="${k}" aria-label="Open ${esc(c.title)}">
+      <div class="fcard-media${c.card.contain ? ' contain' : ''}">
+        ${c.badge ? `<span class="badge">${c.badge}</span>` : ''}
+        ${media}
+      </div>
+      <div class="fcard-body">
+        <div class="card-kicker">${esc(c.kicker)}</div>
+        <h3 class="fcard-title">${esc(c.title)}</h3>
+        ${c.result ? `<p class="card-result">${esc(c.result)}</p>` : (c.desc ? `<p class="card-desc">${esc(c.desc)}</p>` : '')}
+      </div>
+    </article>`;
+}
+
 // Tag each card with its stage and index referenced cards for the Featured set.
 const cardByKey = {};
 SECTIONS.forEach(s => s.cards.forEach(c => { c._stage = s.stage; if (c.key) cardByKey[c.key] = c; }));
@@ -589,19 +631,16 @@ const zapconnectFeatured = {
   goal: "Equip PMs to land consistent, high-quality messaging on the main stage.",
   collab: "Product managers (presenters) and the Events team.",
   card: { type: "image", src: "assets/img/thumbs/deck-connected.jpg" },
-  modal: { type: "image", src: "assets/img/thumbs/deck-editor.jpg" },
   badge: "3 decks", stacked: true,
-  linksLabel: "Decks", links: [
-    { label: "In the Spotlight: New Features in the Zapier Editor", href: "https://docs.google.com/presentation/d/1AOvKkH7_txjnugS93jj0a2dgDZ0-PNXG/edit?usp=sharing&ouid=110767310684061765000&rtpof=true&sd=true" },
-    { label: "Build Powerful Systems with Zapier Copilot", href: "https://docs.google.com/presentation/d/1x1k-my-bMNgeVSFBvIVDFayDDIvvm9cZ3fZaL4VTchQ/edit?usp=sharing" },
-    { label: "Building Connected Systems: Zaps, Tables & Interfaces", href: "https://docs.google.com/presentation/d/1V9oMIwQDxvF7pjKw9wJzhyeitrPbDmIru6VnOhUz5NE/edit?usp=sharing" }
-  ],
-  href: "https://docs.google.com/presentation/d/1V9oMIwQDxvF7pjKw9wJzhyeitrPbDmIru6VnOhUz5NE/edit?usp=sharing",
-  cta: "Open in Google Slides ↗"
+  decks: [
+    { tab: "Editor features", title: "In the Spotlight: New Features in the Zapier Editor", embed: embed("1AOvKkH7_txjnugS93jj0a2dgDZ0-PNXG"), href: "https://docs.google.com/presentation/d/1AOvKkH7_txjnugS93jj0a2dgDZ0-PNXG/edit?usp=sharing&ouid=110767310684061765000&rtpof=true&sd=true" },
+    { tab: "Copilot", title: "Build Powerful Systems with Zapier Copilot", embed: embed("1x1k-my-bMNgeVSFBvIVDFayDDIvvm9cZ3fZaL4VTchQ"), href: "https://docs.google.com/presentation/d/1x1k-my-bMNgeVSFBvIVDFayDDIvvm9cZ3fZaL4VTchQ/edit?usp=sharing" },
+    { tab: "Connected systems", title: "Building Connected Systems: Zaps, Tables & Interfaces", embed: embed("1V9oMIwQDxvF7pjKw9wJzhyeitrPbDmIru6VnOhUz5NE"), href: "https://docs.google.com/presentation/d/1V9oMIwQDxvF7pjKw9wJzhyeitrPbDmIru6VnOhUz5NE/edit?usp=sharing" }
+  ]
 };
 
 const FEATURED = [ cardByKey["revops"], cardByKey["usecases"], zapconnectFeatured, cardByKey["zapmap"] ];
-document.getElementById('featured-grid').innerHTML = FEATURED.map(renderCard).join('');
+document.getElementById('featured-grid').innerHTML = FEATURED.map(renderFeaturedCard).join('');
 
 const main = document.getElementById('sections');
 SECTIONS.forEach((s, i) => {
@@ -634,21 +673,39 @@ function openModal(c, stage, trigger) {
   if (c.result) { document.getElementById('mResult').textContent = c.result; resultRow.style.display = ''; }
   else { resultRow.style.display = 'none'; }
   const mLinks = document.getElementById('mLinks');
-  if (c.links && c.links.length) {
-    mLinks.innerHTML = `<div class="mlinks-label">${esc(c.linksLabel || 'Pages')}</div>` +
-      c.links.map(l => `<a href="${l.href}" target="_blank" rel="noopener">${esc(l.label)} ↗</a>`).join('');
-    mLinks.style.display = '';
-  } else { mLinks.innerHTML = ''; mLinks.style.display = 'none'; }
-  if (c.modal.type === "image") {
-    mMedia.className = "modal-media image";
-    mMedia.innerHTML = `<img src="${c.modal.src}" alt="${esc(c.title)}">`;
+  const mActions = document.getElementById('mActions');
+
+  if (c.decks && c.decks.length) {
+    // Cycle-able deck switcher: tabs swap the live embed and the CTA.
+    mLinks.style.display = 'none'; mLinks.innerHTML = '';
+    let active = 0;
+    const drawDeck = () => {
+      mMedia.className = 'modal-media deck-switch';
+      mMedia.innerHTML =
+        `<div class="deck-tabs" role="tablist">${c.decks.map((d, i) =>
+          `<button class="deck-tab${i === active ? ' on' : ''}" data-i="${i}" aria-selected="${i === active}">${esc(d.tab)}</button>`).join('')}</div>` +
+        `<iframe src="${c.decks[active].embed}" allowfullscreen title="${esc(c.decks[active].title)}"></iframe>`;
+      mActions.innerHTML = `<a class="btn primary" href="${c.decks[active].href}" target="_blank" rel="noopener">Open in Google Slides ↗</a>`;
+      mMedia.querySelectorAll('.deck-tab').forEach(b =>
+        b.addEventListener('click', () => { active = +b.dataset.i; drawDeck(); }));
+    };
+    drawDeck();
   } else {
-    mMedia.className = "modal-media tall";
-    mMedia.innerHTML = `<iframe src="${c.modal.src}" allowfullscreen title="${esc(c.title)}"></iframe>`;
+    if (c.links && c.links.length) {
+      mLinks.innerHTML = `<div class="mlinks-label">${esc(c.linksLabel || 'Pages')}</div>` +
+        c.links.map(l => `<a href="${l.href}" target="_blank" rel="noopener">${esc(l.label)} ↗</a>`).join('');
+      mLinks.style.display = '';
+    } else { mLinks.innerHTML = ''; mLinks.style.display = 'none'; }
+    if (c.modal.type === "image") {
+      mMedia.className = "modal-media image";
+      mMedia.innerHTML = `<img src="${c.modal.src}" alt="${esc(c.title)}">`;
+    } else {
+      mMedia.className = "modal-media tall";
+      mMedia.innerHTML = `<iframe src="${c.modal.src}" allowfullscreen title="${esc(c.title)}"></iframe>`;
+    }
+    const dl = c.modal.type === "pdf" ? `<a class="btn ghost" href="${c.modal.src}" download>Download PDF</a>` : '';
+    mActions.innerHTML = `<a class="btn primary" href="${c.href}" target="_blank" rel="noopener">${c.cta}</a>${dl}`;
   }
-  const dl = c.modal.type === "pdf" ? `<a class="btn ghost" href="${c.modal.src}" download>Download PDF</a>` : '';
-  document.getElementById('mActions').innerHTML =
-    `<a class="btn primary" href="${c.href}" target="_blank" rel="noopener">${c.cta}</a>${dl}`;
   modal.classList.add('open');
   document.body.style.overflow = 'hidden';
   requestAnimationFrame(() => modal.querySelector('.x').focus());
@@ -665,13 +722,14 @@ function openFromCard(card) {
   if (c) openModal(c, c._stage || '', card);
 }
 document.addEventListener('click', e => {
-  const card = e.target.closest('.card');
+  const card = e.target.closest('.card, .fcard');
   if (card && card.dataset.key) openFromCard(card);
 });
 document.addEventListener('keydown', e => {
-  if ((e.key === 'Enter' || e.key === ' ') && e.target.classList && e.target.classList.contains('card')) {
+  const t = e.target;
+  if ((e.key === 'Enter' || e.key === ' ') && t.classList && (t.classList.contains('card') || t.classList.contains('fcard'))) {
     e.preventDefault();
-    openFromCard(e.target);
+    openFromCard(t);
   }
 });
 // Esc to close + basic focus trap while open
